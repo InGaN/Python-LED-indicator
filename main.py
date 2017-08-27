@@ -18,7 +18,7 @@ def set_led(r, g, b, blink_speed=0):
 def main():
     print('Python LED indicator')
 
-    set_led(123, 255, 60, 300)
+    set_led(255, 0, 0)
 
     print('Program end')
 

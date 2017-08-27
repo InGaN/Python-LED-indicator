@@ -1,13 +1,19 @@
+#include <Adafruit_NeoPixel.h>
+
 char buffer [32];
 boolean read_ready = false;
 int counter = 0;
 int red_value, green_value, blue_value;
 int blink_speed = 0;
 
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(1, 8, NEO_GRB + NEO_KHZ800);
+
 void setup() {                
   Serial.begin(9600);
   pinMode(13, OUTPUT);     
   digitalWrite(13, LOW);
+  strip.begin();
+  strip.show();
 }
 
 void ParseLine() {
@@ -37,19 +43,19 @@ void ParseLine() {
       }  
       break;       
   }
+  
   read_ready = false;
 }
 
 void loop() {  
-  if(red_value > 0) {
-    digitalWrite(13, HIGH);
-  }
+  strip.setPixelColor(0, red_value, green_value, blue_value); 
+  strip.show();   
   
-  if(blink_speed > 0) {
-    delay(blink_speed);
-    digitalWrite(13, LOW);    
-    delay(blink_speed);
-  }
+//  if(blink_speed > 0) {
+//    delay(blink_speed);
+//    digitalWrite(13, LOW);    
+//    delay(blink_speed);
+//  }
   
   if(read_ready) {
     ParseLine();
